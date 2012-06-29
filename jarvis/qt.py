@@ -4,9 +4,6 @@ from PyQt4 import QtCore
 from PyQt4.QtCore import Qt
 import os.path
 import codecs
-import osgqt
-import osgDB
-import osg
 import shutil
 import jarvis
 import traceback
@@ -21,7 +18,6 @@ class MyTextEdit(QtGui.QTextEdit):
 class JarvisMain(QtGui.QWidget):
 
     def __init__(self, layout=None):
-        self.osg_enable = True
         super(JarvisMain, self).__init__()
 
         self.initUI(layout)
@@ -57,12 +53,6 @@ class JarvisMain(QtGui.QWidget):
         editor.setMinimumWidth(width)
         editor.setMinimumHeight(height)
         return editor
-
-    def createOSG(self, width, height):
-        osgWidget = osgqt.PyQtOSGWidget(self)
-        osgWidget.setMinimumWidth(width)
-        osgWidget.setMinimumHeight(height)
-        return osgWidget
 
     def parse_layout(self, layout):
         ret = {}
@@ -107,13 +97,8 @@ class JarvisMain(QtGui.QWidget):
         self.error = self.createEditor("", WIDTH, 200)
         self.debug = self.createEditor("", WIDTH, 200)
 
-        if self.osg_enable:
-            self.osgView = self.createOSG(WIDTH, int(WIDTH * 9 / 16.0))
-
         self.rightBox.addWidget(self.error, 0, Qt.AlignRight)
         self.rightBox.addWidget(self.debug, 0, Qt.AlignRight)
-        if self.osg_enable:
-            self.rightBox.addWidget(self.osgView, 0, Qt.AlignRight)
 
 #        editor.textChanged.connect(self.display)
 #        editor.wheelEvent.connect(self.wheelEvent)
@@ -146,19 +131,9 @@ class JarvisMain(QtGui.QWidget):
     def reset(self):
         self.debug.setText("")
         self.error.setText("")
-        self.osgView.resetSceneData(None)
-
-    def osgprint(self, data):
-        self.osgView.setSceneData(data)
-
-    def setlooptime(self, loopTime):
-        self.osgView.setLoopTime(loopTime)
 
     def runcommand(self, fun):
         fun()
-
-    def getosgviewer(self):
-        return self.osgView.getosgviewer()
 
     def file_dialog(self):
         fd = QtGui.QFileDialog(self)

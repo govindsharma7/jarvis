@@ -43,23 +43,11 @@ def debug_dir(object, filt = None):
 def debug_xml(*args):
     debug(*(list(args[:-1]) + [etree.tostring(args[-1], pretty_print = True)]))
 
-def debug_osg(osgdata):
-    if jarvis.ml != None and jarvis.ml.display != None:
-        jarvis.ml.display.osgprint(osgdata)
-
-def debug_osg_set_loop_time(loop_time):
-    if jarvis.ml != None and jarvis.ml.display != None:
-        jarvis.ml.display.setlooptime(loop_time)
-
 def testunit_result(result):
     for err in result.errors:
         error(err[1])
     for err in result.failures:
         error(err[1])
-
-def get_osg_viewer():
-    if jarvis.ml != None and jarvis.ml.display != None:
-        return jarvis.ml.display.getosgviewer()
 
 def add_watch_file(filename):
     if jarvis.ml != None:

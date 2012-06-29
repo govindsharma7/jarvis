@@ -49,10 +49,6 @@ class QTDisplay(QtCore.QObject):
     def destroy(self):
         pass
 
-    # Get the inner osg viewer
-    def getosgviewer(self):
-        return self.jarvismain.getosgviewer()
-
     # For all other display function calls, act as a proxy to qt for calls
     def message(self, fun, *args, **kwargs):
         self.message_available.emit({"fun":fun, "args":args, "kwargs":kwargs})
